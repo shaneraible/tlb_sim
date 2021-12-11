@@ -8,10 +8,9 @@ class TLB:
         self.capacity = capacity
         self.curr_ppn = 0
     
-    def write(self, va, pa):
+    def write(self, va, ppn):
         evicted = None
         vpn = self.get_tag(va)
-        ppn = self.get_tag(pa)
 
         self.cache[vpn] = ppn
         self.cache.move_to_end(vpn, last=False)
@@ -137,6 +136,18 @@ def main():
     print(f'\nTotal pages: {GVars.curr_ppn}')
     print('-----------------------------------------\n')
 
+    print('Final instruction TLB')
+    print('vpn     : ppn')
+    i = 0
+    for entry in GVars.i_tlb.cache:
+        print(f'{hex(entry)}: {hex(GVars.i_tlb.cache[entry])}')  
+
+    print('\nFinal data TLB')
+    print('vpn       : ppn')
+    for entry in GVars.d_tlb.cache:
+        print(f'{hex(entry)}: {hex(GVars.d_tlb.cache[entry])}')
+
+    print('-----------------------------------------\n')
 
 if __name__ == "__main__":
     main()
