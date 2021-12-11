@@ -215,7 +215,7 @@ def main():
         print('-----------------------------------------')
         print(f'executed in {end-start} seconds')
         
-        print(f'\Aaccesses:\t {GVars.d_accesses + GVars.i_accesses}')
+        print(f'\nAccesses:\t {GVars.d_accesses + GVars.i_accesses}')
         print(f'Hits:\t {GVars.d_hits + GVars.i_hits}')
         print(f'Misses:\t {GVars.d_misses + GVars.i_misses}')
         print(f'Hit rate:\t {hit_rate}')
