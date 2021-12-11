@@ -2,6 +2,7 @@ from collections import OrderedDict
 from os import access
 import time 
 
+# The translation lookaside buffer class
 class TLB: 
     def __init__(self, capacity=32):
         self.cache = OrderedDict()
@@ -37,6 +38,7 @@ class TLB:
         else:
             return None
 
+# Global Variables
 class GVars:
     d_tlb = TLB(32)
     i_tlb = TLB(32)
@@ -50,14 +52,19 @@ class GVars:
     d_hits = 0
     d_misses = 0
 
+# All of the instruction functions
 class Instructions:
     def write(addr):
         pa =  GVars.d_tlb.read(addr)
+
+        # miss
         if pa is None:
             GVars.d_pw +=1
             evicted = GVars.d_tlb.write(addr, GVars.curr_ppn)
             GVars.curr_ppn += 1
             GVars.d_misses += 1
+        
+        # hit
         else:
             GVars.d_hits += 1
         
@@ -65,33 +72,45 @@ class Instructions:
 
     def read(addr):
         pa =  GVars.d_tlb.read(addr)
+
+        # miss
         if pa is None:
             GVars.d_pw +=1
             evicted = GVars.d_tlb.write(addr, GVars.curr_ppn)
             GVars.curr_ppn += 1
             GVars.d_misses += 1
+        
+        # hit
         else:
             GVars.d_hits += 1
         GVars.d_accesses += 1
 
     def i_fetch(addr):
         pa =  GVars.i_tlb.read(addr)
+
+        # miss
         if pa is None:
             GVars.i_pw +=1
             evicted = GVars.i_tlb.write(addr, GVars.curr_ppn)
             GVars.curr_ppn += 1
             GVars.i_misses += 1
+        
+        # hit
         else:
             GVars.i_hits += 1
         GVars.i_accesses += 1
 
     def misc(addr):
         pa =  GVars.d_tlb.read(addr)
+
+        # miss
         if pa is None:
             GVars.d_pw +=1
             evicted = GVars.d_tlb.write(addr, GVars.curr_ppn)
             GVars.curr_ppn += 1
             GVars.d_misses += 1
+
+        # hit
         else:
             GVars.d_hits += 1
 
