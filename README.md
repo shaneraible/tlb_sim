@@ -1,4 +1,4 @@
-# tlb_sim
+# Simulation of a Translation Lookaside buffer
 This project simulates a Translation Lookaside Buffer given the address trace file spice.din. 
 
 To run
